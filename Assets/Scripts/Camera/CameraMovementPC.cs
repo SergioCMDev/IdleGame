@@ -58,7 +58,7 @@ namespace Camera
         }
 
 
-        void DoZoom(float wheelMovement)
+        public void DoZoom(float wheelMovement)
         {
             float newSize = _camera.orthographicSize + wheelMovement * _offsetZoom;
             _camera.orthographicSize = Mathf.Clamp(newSize, _minSize, _maxSize);

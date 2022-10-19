@@ -31,7 +31,7 @@ namespace Camera
         {
 #if UNITY_ANDROID && !UNITY_EDITOR
         Debug.Log("CAMERA ANDROID");
-        cameraMovement = new CameraMovementAndroid();
+            _cameraMovement = new CameraMovementAndroid();
 #elif UNITY_EDITOR
             Debug.Log("CAMERA PC");
             _cameraMovement = new CameraMovementPC();

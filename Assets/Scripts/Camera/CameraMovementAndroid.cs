@@ -32,24 +32,51 @@ namespace Camera
                 return;
             }
 
-            var touch = Input.touches[0];
-            switch (touch.phase)
+            if (Input.touchCount == 1)
             {
-                case TouchPhase.Began:
-                    initialTouchPosition = touch.position;
-                    initialPosition = _camera.ScreenToWorldPoint(initialTouchPosition);
-                    break;
-                case TouchPhase.Ended:
-                case TouchPhase.Stationary:
-                case TouchPhase.Moved:
+                var touch = Input.touches[0];
+                switch (touch.phase)
                 {
-                    var offset = initialPosition - _camera.ScreenToWorldPoint(Input.mousePosition);
-                    _camera.transform.position += offset;
-                    break;
+                    case TouchPhase.Began:
+                        initialTouchPosition = touch.position;
+                        initialPosition = _camera.ScreenToWorldPoint(initialTouchPosition);
+                        break;
+                    case TouchPhase.Ended:
+                    case TouchPhase.Stationary:
+                    case TouchPhase.Moved:
+                    {
+                        var offset = initialPosition - _camera.ScreenToWorldPoint(touch.position);
+                        _camera.transform.position += offset;
+                        break;
+                    }
+                }
+            }
+
+            if (Input.touchCount == 2)
+            {
+                var touch1 = _camera.ScreenToWorldPoint(Input.touches[0].position);
+                var touch2 = _camera.ScreenToWorldPoint(Input.touches[1].position);
+
+                var touch1Offset =
+                    _camera.ScreenToWorldPoint(Input.touches[0].position - Input.touches[0].deltaPosition);
+                var touch2Offset =
+                    _camera.ScreenToWorldPoint(Input.touches[1].position - Input.touches[1].deltaPosition);
+
+                var zoom = Vector3.Distance(touch1, touch2) - Vector3.Distance(touch1Offset, touch2Offset);
+
+                if (zoom != 0 && zoom < 10)
+                {
+                    DoZoom(zoom);
                 }
             }
 
             _camera.transform.position = Utilities.ClampCamera(_camera, _camera.transform.position, _squareSize);
+        }
+
+        public void DoZoom(float wheelMovement)
+        {
+            var newSize = _camera.orthographicSize + wheelMovement * _offsetZoom;
+            _camera.orthographicSize = Mathf.Clamp(newSize, _minSize, _maxSize);
         }
     }
 }

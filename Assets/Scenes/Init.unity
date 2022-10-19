@@ -722,9 +722,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1698790232}
-  offsetZoom: 1
-  minSize: 2
-  maxSize: 10
+  zoomData:
+    offsetZoom: 1
+    minSize: 2
+    maxSize: 10
   squareSize:
     SizeX: 40
     SizeY: 40
