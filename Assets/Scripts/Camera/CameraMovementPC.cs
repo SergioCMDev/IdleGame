@@ -15,6 +15,7 @@ namespace Camera
         private float _offsetZoom;
         private float _minSize;
         private float _maxSize;
+        private bool _zoomEnabled;
 
         public void Init(UnityEngine.Camera camera, SquareSize squareSize, ZoomData zoomData)
         {
@@ -23,6 +24,7 @@ namespace Camera
             _offsetZoom = zoomData.offsetZoom;
             _minSize = zoomData.minSize;
             _maxSize = zoomData.maxSize;
+            _zoomEnabled = zoomData.zoomEnabled;
         }
 
         public void DoMovement()
@@ -47,11 +49,13 @@ namespace Camera
                 _camera.transform.position += offset;
             }
 
-
-            var wheelMovement = Input.GetAxis("Mouse ScrollWheel");
-            if (wheelMovement is < 0 or > 0)
+            if (_zoomEnabled)
             {
-                DoZoom(wheelMovement);
+                var wheelMovement = Input.GetAxis("Mouse ScrollWheel");
+                if (wheelMovement is < 0 or > 0)
+                {
+                    DoZoom(wheelMovement);
+                }
             }
 
             _camera.transform.position = Utilities.ClampCamera(_camera, _camera.transform.position, _squareSize);
@@ -60,7 +64,7 @@ namespace Camera
 
         public void DoZoom(float wheelMovement)
         {
-            float newSize = _camera.orthographicSize + wheelMovement * _offsetZoom;
+            var newSize = _camera.orthographicSize + wheelMovement * _offsetZoom;
             _camera.orthographicSize = Mathf.Clamp(newSize, _minSize, _maxSize);
         }
     }

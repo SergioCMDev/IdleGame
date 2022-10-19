@@ -13,6 +13,8 @@ namespace Camera
     public struct ZoomData
     {
         public int offsetZoom, minSize, maxSize;
+        public bool zoomEnabled;
+        
     }
 
     public class CameraMovement : MonoBehaviour

@@ -15,6 +15,7 @@ namespace Camera
         private float _offsetZoom;
         private float _minSize;
         private float _maxSize;
+        private bool _zoomEnabled;
 
         public void Init(UnityEngine.Camera camera, SquareSize squareSize, ZoomData zoomData)
         {
@@ -23,6 +24,7 @@ namespace Camera
             _offsetZoom = zoomData.offsetZoom;
             _minSize = zoomData.minSize;
             _maxSize = zoomData.maxSize;
+            _zoomEnabled = zoomData.zoomEnabled;
         }
 
         public void DoMovement()
@@ -52,7 +54,7 @@ namespace Camera
                 }
             }
 
-            if (Input.touchCount == 2)
+            if (Input.touchCount == 2 && _zoomEnabled)
             {
                 var touch1 = _camera.ScreenToWorldPoint(Input.touches[0].position);
                 var touch2 = _camera.ScreenToWorldPoint(Input.touches[1].position);
