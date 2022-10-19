@@ -13,7 +13,6 @@ namespace AndroidLocalNotifications
         {
             _androidNotificationService = ServiceLocator.Instance.GetService<IAndroidNotificationService>();
             _androidNotificationService.AddNotificationListener(ReceivedNotificationHandler);
-            _androidNotificationService.RemoveNotificationListener(ReceivedNotificationHandler);
         }
 
         private void ReceivedNotificationHandler(AndroidNotificationIntentData data)
