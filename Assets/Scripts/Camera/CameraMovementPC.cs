@@ -1,0 +1,63 @@
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class CameraMovementPC : ICameraMovement
+{
+    private Vector3 _initialPosition;
+    private Vector2 _endedPosition;
+    private Vector2 _currentPosition;
+    private Vector3 _initialMousePosition;
+    private Camera _camera;
+    private SquareSize _squareSize;
+    private float _offsetZoom;
+    private float _minSize;
+    private float _maxSize;
+
+    public void Init(Camera camera, SquareSize squareSize, ZoomData zoomData)
+    {
+        _camera = camera;
+        _squareSize = squareSize;
+        _offsetZoom = zoomData.offsetZoom;
+        _minSize = zoomData.minSize;
+        _maxSize = zoomData.maxSize;
+    }
+
+    public void DoMovement()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            _initialMousePosition = Input.mousePosition;
+            _initialPosition = _camera.ScreenToWorldPoint(_initialMousePosition);
+
+            Debug.Log($"MOVE {_initialPosition}");
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            var offset = _initialPosition - _camera.ScreenToWorldPoint(Input.mousePosition);
+
+            _camera.transform.position += offset;
+        }
+
+
+        var wheelMovement = Input.GetAxis("Mouse ScrollWheel");
+        if (wheelMovement is < 0 or > 0)
+        {
+            DoZoom(wheelMovement);
+        }
+
+        _camera.transform.position = Utilities.ClampCamera(_camera, _camera.transform.position, _squareSize);
+    }
+
+
+    void DoZoom(float wheelMovement)
+    {
+        float newSize = _camera.orthographicSize + wheelMovement * _offsetZoom;
+        _camera.orthographicSize = Mathf.Clamp(newSize, _minSize, _maxSize);
+    }
+}
