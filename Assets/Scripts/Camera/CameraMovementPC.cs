@@ -1,63 +1,67 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
-public class CameraMovementPC : ICameraMovement
+namespace Camera
 {
-    private Vector3 _initialPosition;
-    private Vector2 _endedPosition;
-    private Vector2 _currentPosition;
-    private Vector3 _initialMousePosition;
-    private Camera _camera;
-    private SquareSize _squareSize;
-    private float _offsetZoom;
-    private float _minSize;
-    private float _maxSize;
-
-    public void Init(Camera camera, SquareSize squareSize, ZoomData zoomData)
+    public class CameraMovementPC : ICameraMovement
     {
-        _camera = camera;
-        _squareSize = squareSize;
-        _offsetZoom = zoomData.offsetZoom;
-        _minSize = zoomData.minSize;
-        _maxSize = zoomData.maxSize;
-    }
+        private Vector3 _initialPosition;
+        private Vector2 _endedPosition;
+        private Vector2 _currentPosition;
+        private Vector3 _initialMousePosition;
+        private UnityEngine.Camera _camera;
+        private SquareSize _squareSize;
+        private float _offsetZoom;
+        private float _minSize;
+        private float _maxSize;
 
-    public void DoMovement()
-    {
-        if (EventSystem.current.IsPointerOverGameObject())
+        public void Init(UnityEngine.Camera camera, SquareSize squareSize, ZoomData zoomData)
         {
-            return;
+            _camera = camera;
+            _squareSize = squareSize;
+            _offsetZoom = zoomData.offsetZoom;
+            _minSize = zoomData.minSize;
+            _maxSize = zoomData.maxSize;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        public void DoMovement()
         {
-            _initialMousePosition = Input.mousePosition;
-            _initialPosition = _camera.ScreenToWorldPoint(_initialMousePosition);
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
 
-            Debug.Log($"MOVE {_initialPosition}");
+            if (Input.GetMouseButtonDown(0))
+            {
+                _initialMousePosition = Input.mousePosition;
+                _initialPosition = _camera.ScreenToWorldPoint(_initialMousePosition);
+
+                Debug.Log($"MOVE {_initialPosition}");
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                var offset = _initialPosition - _camera.ScreenToWorldPoint(Input.mousePosition);
+
+                _camera.transform.position += offset;
+            }
+
+
+            var wheelMovement = Input.GetAxis("Mouse ScrollWheel");
+            if (wheelMovement is < 0 or > 0)
+            {
+                DoZoom(wheelMovement);
+            }
+
+            _camera.transform.position = Utilities.ClampCamera(_camera, _camera.transform.position, _squareSize);
         }
 
-        if (Input.GetMouseButton(0))
+
+        void DoZoom(float wheelMovement)
         {
-            var offset = _initialPosition - _camera.ScreenToWorldPoint(Input.mousePosition);
-
-            _camera.transform.position += offset;
+            float newSize = _camera.orthographicSize + wheelMovement * _offsetZoom;
+            _camera.orthographicSize = Mathf.Clamp(newSize, _minSize, _maxSize);
         }
-
-
-        var wheelMovement = Input.GetAxis("Mouse ScrollWheel");
-        if (wheelMovement is < 0 or > 0)
-        {
-            DoZoom(wheelMovement);
-        }
-
-        _camera.transform.position = Utilities.ClampCamera(_camera, _camera.transform.position, _squareSize);
-    }
-
-
-    void DoZoom(float wheelMovement)
-    {
-        float newSize = _camera.orthographicSize + wheelMovement * _offsetZoom;
-        _camera.orthographicSize = Mathf.Clamp(newSize, _minSize, _maxSize);
     }
 }

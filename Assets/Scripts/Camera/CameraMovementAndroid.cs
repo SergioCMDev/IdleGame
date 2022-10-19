@@ -1,51 +1,55 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
-public class CameraMovementAndroid : ICameraMovement
+namespace Camera
 {
-    private Vector3 initialPosition;
-    private Vector2 endedPosition;
-    private Vector2 currentPosition;
-    private Vector3 initialTouchPosition;
-    private Camera _camera;
-    private SquareSize _squareSize;
-    private float _offsetZoom;
-    private float _minSize;
-    private float _maxSize;
-
-    public void Init(Camera camera, SquareSize squareSize, ZoomData zoomData)
+    public class CameraMovementAndroid : ICameraMovement
     {
-        _camera = camera;
-        _squareSize = squareSize;
-        _offsetZoom = zoomData.offsetZoom;
-        _minSize = zoomData.minSize;
-        _maxSize = zoomData.maxSize;
-    }
+        private Vector3 initialPosition;
+        private Vector2 endedPosition;
+        private Vector2 currentPosition;
+        private Vector3 initialTouchPosition;
+        private UnityEngine.Camera _camera;
+        private SquareSize _squareSize;
+        private float _offsetZoom;
+        private float _minSize;
+        private float _maxSize;
 
-    public void DoMovement()
-    {
-        if (EventSystem.current.IsPointerOverGameObject() || Input.touchCount < 1)
+        public void Init(UnityEngine.Camera camera, SquareSize squareSize, ZoomData zoomData)
         {
-            return;
+            _camera = camera;
+            _squareSize = squareSize;
+            _offsetZoom = zoomData.offsetZoom;
+            _minSize = zoomData.minSize;
+            _maxSize = zoomData.maxSize;
         }
 
-        var touch = Input.touches[0];
-        switch (touch.phase)
+        public void DoMovement()
         {
-            case TouchPhase.Began:
-                initialTouchPosition = touch.position;
-                initialPosition = _camera.ScreenToWorldPoint(initialTouchPosition);
-                break;
-            case TouchPhase.Ended:
-            case TouchPhase.Stationary:
-            case TouchPhase.Moved:
+            if (EventSystem.current.IsPointerOverGameObject() || Input.touchCount < 1)
             {
-                var offset = initialPosition - _camera.ScreenToWorldPoint(Input.mousePosition);
-                _camera.transform.position += offset;
-                break;
+                return;
             }
-        }
 
-        _camera.transform.position = Utilities.ClampCamera(_camera, _camera.transform.position, _squareSize);
+            var touch = Input.touches[0];
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    initialTouchPosition = touch.position;
+                    initialPosition = _camera.ScreenToWorldPoint(initialTouchPosition);
+                    break;
+                case TouchPhase.Ended:
+                case TouchPhase.Stationary:
+                case TouchPhase.Moved:
+                {
+                    var offset = initialPosition - _camera.ScreenToWorldPoint(Input.mousePosition);
+                    _camera.transform.position += offset;
+                    break;
+                }
+            }
+
+            _camera.transform.position = Utilities.ClampCamera(_camera, _camera.transform.position, _squareSize);
+        }
     }
 }

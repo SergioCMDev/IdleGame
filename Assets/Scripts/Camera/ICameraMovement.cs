@@ -1,7 +1,8 @@
-using UnityEngine;
-
-public interface ICameraMovement
+namespace Camera
 {
-    public void DoMovement();
-    void Init(Camera camera, SquareSize squareSize, ZoomData zoomData);
+    public interface ICameraMovement
+    {
+        public void DoMovement();
+        void Init(UnityEngine.Camera camera, SquareSize squareSize, ZoomData zoomData);
+    }
 }
