@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0624eb347c4f778ca37ff3fed262c9, type: 3}
+  m_Name: SpritesLoader
+  m_EditorClassIdentifier: 
+  _isService: 1
+  _dependencies: []
+  Sprites:
+  - {fileID: 21300000, guid: 5473091eb32ba45a5ba74850eb38f83b, type: 3}
