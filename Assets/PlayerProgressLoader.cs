@@ -5,7 +5,6 @@ public class PlayerProgressLoader : LoadableComponent
 {
     public override void Execute()
     {
-        Debug.Log("F11");
-        // Initialized = true;
+        Debug.Log("[PlayerProgressLoader] Iniciamos inicializacion");
     }
 }

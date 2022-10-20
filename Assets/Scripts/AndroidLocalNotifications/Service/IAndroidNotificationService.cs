@@ -5,7 +5,6 @@ namespace AndroidLocalNotifications.Service
 {
     public interface IAndroidNotificationService
     {
-
         void Initialize();
         AndroidNotificationChannel CreateChannel(string channelID, string channelName, Importance importance,
             string description);

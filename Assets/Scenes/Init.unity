@@ -851,6 +851,7 @@ MonoBehaviour:
   loadablesSO:
   - {fileID: 11400000, guid: d2a495b29dd91f64fa8801ba360163df, type: 2}
   - {fileID: 11400000, guid: bbd89787f684dd54daf7b4b45ff778ac, type: 2}
+  - {fileID: 11400000, guid: 9979113ee83b31a4f86ea5f77368e1b6, type: 2}
 --- !u!4 &2011008626
 Transform:
   m_ObjectHideFlags: 0

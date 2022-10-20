@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Utils;
 
@@ -40,6 +41,12 @@ public class GameLoader : MonoBehaviour
             loadableStatus.Add(loadable, true);
             if (!loadable.IsService) continue;
             var objectType = loadable.GetType();
+            if (objectType.GetInterfaces().Any(x => x != typeof(ILoadable)))
+            {
+                var interfaz = objectType.GetInterfaces().Single(x => x != typeof(ILoadable));
+                ServiceLocator.Instance.RegisterService(interfaz, loadable);
+                continue;
+            }
             ServiceLocator.Instance.RegisterService(objectType, loadable);
         }
     }

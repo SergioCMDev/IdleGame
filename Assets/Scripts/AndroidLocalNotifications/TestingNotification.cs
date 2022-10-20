@@ -8,12 +8,7 @@ namespace AndroidLocalNotifications
     public class TestingNotification : MonoBehaviour
     {
         private IAndroidNotificationService _androidNotificationService;
-
-        private void Awake()
-        {
-            _androidNotificationService = ServiceLocator.Instance.GetService<IAndroidNotificationService>();
-            _androidNotificationService.AddNotificationListener(ReceivedNotificationHandler);
-        }
+        
 
         private void ReceivedNotificationHandler(AndroidNotificationIntentData data)
         {
@@ -27,6 +22,8 @@ namespace AndroidLocalNotifications
 
         void Start()
         {
+            _androidNotificationService = ServiceLocator.Instance.GetService<IAndroidNotificationService>();
+            _androidNotificationService.AddNotificationListener(ReceivedNotificationHandler);
             var channelID = "channel_id";
             _androidNotificationService.Initialize();
             var channel = _androidNotificationService.CreateChannel(channelID, "SpeedySquare", Importance.High,

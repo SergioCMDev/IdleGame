@@ -7,7 +7,6 @@ public class SpritesLoaderService : LoadableComponent
     public List<Sprite> Sprites;
     public override void Execute()
     {
-        Debug.Log("F");
-        // Initialized = true;
+        Debug.Log("[SpritesLoaderService] Iniciamos inicializacion");
     }
 }

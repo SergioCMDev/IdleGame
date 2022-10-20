@@ -40,7 +40,7 @@ public class Installer : MonoBehaviour
 
 
         //TODO HACERLO PARA N OBJETOS NO SOLO 1
-        ServiceLocator.Instance.RegisterService<IAndroidNotificationService>(new AndroidNotificationGeneratorService());
+        // ServiceLocator.Instance.RegisterService<IAndroidNotificationService>(new AndroidNotificationGeneratorService());
         // ServiceLocator.Instance.RegisterService<IJsonator>(new JsonUtililyTransformer());
         // ServiceLocator.Instance.RegisterService<ISaver>(new SaveUsingPlayerPrefs());
         // ServiceLocator.Instance.RegisterService<ILoader>(new LoadWithPlayerPrefs());
