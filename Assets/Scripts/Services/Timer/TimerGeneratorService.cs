@@ -14,6 +14,7 @@ namespace Services.Timer
 
         public override void Execute()
         {
+            Debug.Log("[TimerGeneratorService] Iniciamos inicializacion");
         }
     }
 }
