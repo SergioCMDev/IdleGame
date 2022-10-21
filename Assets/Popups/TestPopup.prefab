@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 8862750201491635131}
   - component: {fileID: 1408443413859199547}
   m_Layer: 5
-  m_Name: AstronautPopupInfoPopup
+  m_Name: TestPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
