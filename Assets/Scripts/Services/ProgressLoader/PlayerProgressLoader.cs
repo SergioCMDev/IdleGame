@@ -1,10 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="PlayerProgressLoader", menuName = "Loadable/PlayerProgressLoader")]
-public class PlayerProgressLoader : LoadableComponent
+namespace Services.ProgressLoader
 {
-    public override void Execute()
+    [CreateAssetMenu(fileName ="PlayerProgressLoader", menuName = "Loadable/PlayerProgressLoader")]
+    public class PlayerProgressLoader : LoadableComponent
     {
-        Debug.Log("[PlayerProgressLoader] Iniciamos inicializacion");
+        public override void Execute()
+        {
+            Debug.Log("[PlayerProgressLoader] Iniciamos inicializacion");
+        }
     }
 }

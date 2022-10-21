@@ -1,62 +1,66 @@
 using System.Collections.Generic;
 using System.Linq;
+using Services;
 using UnityEngine;
 using Utils;
 
-public class GameLoader : MonoBehaviour
+namespace GameLoader
 {
-    [SerializeField] private List<ScriptableObject> loadablesSO;
-    private Dictionary<ILoadable, bool> loadableStatus;
-
-    private void Start()
+    public class GameLoader : MonoBehaviour
     {
-        loadableStatus = new Dictionary<ILoadable, bool>();
-        ExecuteComponents(loadablesSO);
-    }
+        [SerializeField] private List<ScriptableObject> loadablesSO;
+        private Dictionary<ILoadable, bool> loadableStatus;
 
-    private void ExecuteComponents(List<ScriptableObject> list)
-    {
-        List<ILoadable> loadables = new();
-        foreach (var loadable in list)
+        private void Start()
         {
-            var component = (ILoadable)loadable;
-            if (component.Dependencies.Contains(loadable))
-            {
-                RemoveInnerSelfComponent(component, loadable);
-            }
-
-            loadables.Add(component);
+            loadableStatus = new Dictionary<ILoadable, bool>();
+            ExecuteComponents(loadablesSO);
         }
 
-        foreach (var loadable in loadables)
+        private void ExecuteComponents(List<ScriptableObject> list)
         {
-            if (loadableStatus.ContainsKey(loadable) && loadableStatus[loadable]) continue;
-            if (loadable.Dependencies is { Count: > 0 })
+            List<ILoadable> loadables = new();
+            foreach (var loadable in list)
             {
-                ExecuteComponents(loadable.Dependencies);
+                var component = (ILoadable)loadable;
+                if (component.Dependencies.Contains(loadable))
+                {
+                    RemoveInnerSelfComponent(component, loadable);
+                }
+
+                loadables.Add(component);
             }
 
-            loadable.Execute();
-
-            loadableStatus.Add(loadable, true);
-            if (!loadable.IsService) continue;
-            var objectType = loadable.GetType();
-            if (objectType.GetInterfaces().Any(x => x != typeof(ILoadable)))
+            foreach (var loadable in loadables)
             {
-                var interfaz = objectType.GetInterfaces().Single(x => x != typeof(ILoadable));
-                ServiceLocator.Instance.RegisterService(interfaz, loadable);
-                continue;
+                if (loadableStatus.ContainsKey(loadable) && loadableStatus[loadable]) continue;
+                if (loadable.Dependencies is { Count: > 0 })
+                {
+                    ExecuteComponents(loadable.Dependencies);
+                }
+
+                loadable.Execute();
+
+                loadableStatus.Add(loadable, true);
+                if (!loadable.IsService) continue;
+                var objectType = loadable.GetType();
+                if (objectType.GetInterfaces().Any(x => x != typeof(ILoadable)))
+                {
+                    var interfaz = objectType.GetInterfaces().Single(x => x != typeof(ILoadable));
+                    ServiceLocator.Instance.RegisterService(interfaz, loadable);
+                    continue;
+                }
+                ServiceLocator.Instance.RegisterService(objectType, loadable);
             }
-            ServiceLocator.Instance.RegisterService(objectType, loadable);
         }
-    }
 
-    private static void RemoveInnerSelfComponent(ILoadable component, ScriptableObject loadable)
-    {
-        var itselfComponent = component.Dependencies.FindAll(x => x == loadable);
-        foreach (var sameComponent in itselfComponent)
+        private static void RemoveInnerSelfComponent(ILoadable component, ScriptableObject loadable)
         {
-            component.Dependencies.Remove(sameComponent);
+            var itselfComponent = component.Dependencies.FindAll(x => x == loadable);
+            foreach (var sameComponent in itselfComponent)
+            {
+                component.Dependencies.Remove(sameComponent);
+            }
         }
     }
 }

@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SpritesLoader", menuName = "Loadable/SpritesLoader")]
-public class SpritesLoaderService : LoadableComponent
+namespace Services.SpritesLoader
 {
-    public List<Sprite> Sprites;
-    public override void Execute()
+    [CreateAssetMenu(fileName = "SpritesLoader", menuName = "Loadable/SpritesLoader")]
+    public class SpritesLoaderService : LoadableComponent
     {
-        Debug.Log("[SpritesLoaderService] Iniciamos inicializacion");
+        public List<Sprite> Sprites;
+        public override void Execute()
+        {
+            Debug.Log("[SpritesLoaderService] Iniciamos inicializacion");
+        }
     }
 }
