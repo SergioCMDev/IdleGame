@@ -9,12 +9,12 @@ namespace Services.SavegameInteractorService
     {
         private IGameLoader _gameLoader;
         private IGameSaver _gameSaver;
-        private Savegame _savegame;
+        private Savegame _savegameFile;
 
-        public Savegame Savegame
+        public Savegame SavegameFile
         {
-            get => _savegame;
-            set => _savegame = value;
+            get => _savegameFile;
+            set => _savegameFile = value;
         }
 
         public override void Execute()
@@ -36,7 +36,7 @@ namespace Services.SavegameInteractorService
 
         private void UpdateSavegame(Savegame obj)
         {
-            _savegame = obj;
+            _savegameFile = obj;
         }
     }
 }

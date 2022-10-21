@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isService: 1
   _orderToExecute: 0
-  _dependencies: []
+  _dependencies:
+  - {fileID: 11400000, guid: 9ffd597f73273764ca579e1d723893fa, type: 2}
