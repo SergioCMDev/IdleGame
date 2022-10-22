@@ -1,3 +1,4 @@
+using Services.Utils;
 using UnityEngine;
 
 namespace Services.Timer
@@ -5,9 +6,9 @@ namespace Services.Timer
     [CreateAssetMenu(fileName = "TimerGeneratorService", menuName = "Loadable/Services/TimerGeneratorService")]
     public class TimerGeneratorService : LoadableComponent, ITimerGenerator
     {
-        public Utils.Timer GenerateTimer(float timeToWait, bool repeatable)
+        public global::Utils.Timer GenerateTimer(float timeToWait, bool repeatable)
         {
-            var timer = new Utils.Timer();
+            var timer = new global::Utils.Timer();
             timer.Init(timeToWait, repeatable);
             return timer;
         }

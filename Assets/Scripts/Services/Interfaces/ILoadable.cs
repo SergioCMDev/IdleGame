@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Services
+namespace Services.Interfaces
 {
     public interface ILoadable
     {

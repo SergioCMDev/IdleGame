@@ -1,44 +1,44 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Services.TimerOutsideCounterService;
 using UnityEngine;
 using Utils;
 
-public class TestTimerOutside : MonoBehaviour
+namespace ScriptsToTest
 {
-    private TimeNotPlayingCounterService _timerNotPlaying;
-
-    [SerializeField] private bool _exitApp;
-
-    // Start is called before the first frame update
-    void Start()
+    public class TestTimerOutside : MonoBehaviour
     {
-        _timerNotPlaying = ServiceLocator.Instance.GetService<TimeNotPlayingCounterService>();
-        if (_exitApp)
+        private TimeNotPlayingCounterService _timerNotPlaying;
+
+        [SerializeField] private bool _exitApp;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            _timerNotPlaying.ExitingApp();
-            return;
+            _timerNotPlaying = ServiceLocator.Instance.GetService<TimeNotPlayingCounterService>();
+            if (_exitApp)
+            {
+                _timerNotPlaying.ExitingApp();
+                return;
+            }
+
+            var minutes = _timerNotPlaying.GetMinutesOutside();
         }
 
-        var minutes = _timerNotPlaying.GetMinutesOutside();
-    }
-
-    private void OnApplicationQuit()
-    {
-        _timerNotPlaying.ExitingApp();
-    }
-
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (!hasFocus)
+        private void OnApplicationQuit()
         {
             _timerNotPlaying.ExitingApp();
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+            {
+                _timerNotPlaying.ExitingApp();
+            }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+        }
     }
 }

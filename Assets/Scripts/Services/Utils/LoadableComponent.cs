@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Services.Interfaces;
 using UnityEngine;
 
-namespace Services
+namespace Services.Utils
 {
     public abstract class LoadableComponent : ScriptableObject, ILoadable
     {
