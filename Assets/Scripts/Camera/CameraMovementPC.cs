@@ -39,7 +39,7 @@ namespace Camera
                 _initialMousePosition = Input.mousePosition;
                 _initialPosition = _camera.ScreenToWorldPoint(_initialMousePosition);
 
-                Debug.Log($"MOVE {_initialPosition}");
+                // Debug.Log($"MOVE {_initialPosition}");
             }
 
             if (Input.GetMouseButton(0))
