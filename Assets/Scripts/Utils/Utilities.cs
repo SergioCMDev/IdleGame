@@ -20,6 +20,11 @@ namespace Utils
             float newY = Mathf.Clamp(targetPosition.y, minY, maxY);
             return new Vector3(newX, newY, targetPosition.z);
         }
-        
+
+        public static int CheckValidationLevel(int level, int maxLevel)
+        {
+            level = Mathf.Clamp(level, 0, maxLevel);
+            return level;
+        }
     }
 }
