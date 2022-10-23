@@ -82,6 +82,7 @@ namespace Services.PopupManager
         {
             _camera = UnityEngine.Camera.main;
             _positionWhereSpawn = new GameObject().transform;
+            _positionWhereSpawn.name = "PopupsContainer";
         }
     }
 }

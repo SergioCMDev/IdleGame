@@ -21,9 +21,9 @@ namespace Utils
             return new Vector3(newX, newY, targetPosition.z);
         }
 
-        public static int CheckValidationLevel(int level, int maxLevel)
+        public static int CheckValidationLevel(int level, int maxLevel, int minLevel = 0)
         {
-            level = Mathf.Clamp(level, 0, maxLevel);
+            level = Mathf.Clamp(level, minLevel, maxLevel);
             return level;
         }
     }

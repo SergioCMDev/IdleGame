@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Buildings
 {
     public abstract class UpgradableObject : MonoBehaviour, ILeveable
     {
         public LevelData LevelData => _levelData;
-
+        public Action<UpgradableObject> OnObjectUpdated;
         public BuildingType BuildingType { get; internal set; }
+        public int Id => objectId;
         protected int objectId;
         private LevelData _levelData;
 
@@ -30,7 +32,8 @@ namespace Buildings
         {
             _levelData.Upgrade();
             IncrementEarningAfterLevelUp();
-            Debug.Log($"Upgraded {this}");
+            OnObjectUpdated?.Invoke(this);
+            Debug.Log($"Upgraded {this.gameObject.name}");
         }
 
         protected abstract void  IncrementEarningAfterLevelUp();

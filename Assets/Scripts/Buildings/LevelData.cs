@@ -8,6 +8,7 @@ namespace Buildings
         private int _maximumLevel;
 
         public int Level => _currentLevel;
+        public int MaximumLevel => _maximumLevel;
 
         private int _currentLevel;
 
@@ -20,6 +21,7 @@ namespace Buildings
         public void Upgrade()
         {
             _currentLevel++;
+            _currentLevel = Utilities.CheckValidationLevel(_currentLevel, _maximumLevel);
             Debug.Log($"Upgraded {this}");
         }
 
