@@ -7,21 +7,25 @@ namespace Buildings
 {
     public class Entrance : MonoBehaviour
     {
-        private List<ILeveable> _queueEntrances = new();
-        private List<ILeveable> _queueEntrancesEnabled = new();
+        // private List<ILeveable> _queueEntrances = new();
+        private List<QueueEntrance> _queueEntrancesEnabled = new();
+        [SerializeField] private QueueEntrance entrancePrefab; //TODO DO PREFAB GETTER
 
         public void Init()
         {
             var gameConfiguration = ServiceLocator.Instance.GetService<IGameConfigurator>().GameConfiguration;
             for (int i = 0; i < gameConfiguration.MaximumNumberOfEntrance; i++)
             {
-                ILeveable queueEntrance = new QueueEntrance();
-                queueEntrance.Init(i, gameConfiguration.MaximumNumberOfEntrance);
-                _queueEntrancesEnabled.Add(queueEntrance);
+               var queueEntranceInstance = Instantiate(entrancePrefab);
+               var leveable = queueEntranceInstance.GetComponent<ILeveable>();
+               var profitable = queueEntranceInstance.GetComponent<IProfitable>();
+                // IProfitable queueEntranceProfitable = new QueueEntrance();
+                queueEntranceInstance.Init(i, gameConfiguration.MaximumNumberOfEntrance);
+                _queueEntrancesEnabled.Add(queueEntranceInstance);
             }
         }
 
-        public ILeveable GetQueue(int id)
+        public QueueEntrance GetQueue(int id)
         {
             return _queueEntrancesEnabled[id];
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Services.GameConfigurator
 {
-    [CreateAssetMenu(fileName = "LocalGameConfig", menuName = "Services/GameConfigurationReader")]
+    [CreateAssetMenu(fileName = "LocalGameConfig", menuName = "Loadable/Services/GameConfigurationReader")]
     public class GameConfigurationReader : LoadableComponent, IGameConfigurator
     {
         public GameConfiguration GameConfiguration => gameConfiguration;

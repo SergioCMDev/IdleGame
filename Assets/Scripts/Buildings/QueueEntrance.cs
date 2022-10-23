@@ -1,43 +1,34 @@
-﻿using UnityEngine;
-using Utils;
-
-namespace Buildings
+﻿namespace Buildings
 {
-    public class QueueEntrance : ILeveable
+    public class QueueEntrance : UpgradableObject, IProfitable
     {
-        public int Level { private set; get; }
-        public BuildingType BuildingType { get; private set; }
-        private int _id;
-        private int _maximumLevel;
+        //Add something to read initial value and increment
+        private int _initialValue;
+        private float _increment = 0;
 
         public QueueEntrance()
         {
             BuildingType = BuildingType.QueueEntrance;
         }
-        public void OverrideLevel(int newLevel)
+
+        public float GetBenefitForMinute()
         {
-            Level = newLevel;
-            Level = Utilities.CheckValidationLevel(Level, _maximumLevel);
+            return _initialValue * LevelData.Level + _increment; //TODO Get value
         }
 
-        public void Init(int id, int maximumLevel)
+        public float GetBenefitForSecond()
         {
-            Level = 1;
-            _id = id;
-            _maximumLevel = maximumLevel;
+            return GetBenefitForMinute() / 60;
         }
 
-        public void Upgrade()
+        public float GetBenefitForMinuteAtNextLevel()
         {
-            Level++;
-            Debug.Log($"Upgraded {this}");
+            return (GetBenefitForMinute() + GetBenefitForMinute() * _increment);
         }
 
-        public void Downgrade()
+        protected override void IncrementEarningAfterLevelUp()
         {
-            Level--;
-            Level = Utilities.CheckValidationLevel(Level, _maximumLevel);
-            Debug.Log($"Downgraded {this} {_id}");
+            _increment += 0.1f;
         }
     }
 }

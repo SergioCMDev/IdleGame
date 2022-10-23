@@ -1,22 +1,26 @@
-﻿using System;
-using Buildings;
+﻿using Buildings;
+using Services.Utils;
+using UnityEngine;
 
 namespace Services.BuildingEarningCalculatorService
 {
-    public class BuildingEarningCalculatorZoneOne : IBuildingsEarningsCalculatorService
+    [CreateAssetMenu(fileName = "BuildingEarningCalculatorZoneOne",
+        menuName = "Loadable/Services/BuildingEarningCalculatorZoneOne")]
+    public class BuildingEarningCalculatorZoneOne : LoadableComponent, IProfitCalculatorService
     {
-        public int GetCurrentEarnings(ILeveable queueEntrance)
+        public float GetCurrentEarningsForSecond(IProfitable queueEntrance)
         {
-            switch (queueEntrance.BuildingType)
-            {
-                case BuildingType.QueueEntrance:
-                    //
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        
-            throw new System.NotImplementedException();
+            return queueEntrance.GetBenefitForSecond();
+        }
+        public float GetCurrentEarningsForMinute(IProfitable queueEntrance)
+        {
+            return queueEntrance.GetBenefitForMinute();
+        }
+
+        public override void Execute()
+        {
+            Debug.Log("[BuildingEarningCalculatorZoneOne] Init");
+
         }
     }
 }

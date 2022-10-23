@@ -2,11 +2,12 @@
 {
     public interface ILeveable
     {
-        public int Level { get; }
-        BuildingType BuildingType { get; }
+        public LevelData LevelData { get; }
+        public BuildingType BuildingType { get; }
         public void OverrideLevel(int newLevel);
-        void Init(int id, int maximumLevel);
-        void Upgrade();
-        void Downgrade();
+        void OverrideMaximumLevel(int newLevel);
+        public void Init(int id, int maximumLevel);
+        public void Upgrade();
+        public void Downgrade();
     }
 }
