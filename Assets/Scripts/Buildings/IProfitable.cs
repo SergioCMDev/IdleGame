@@ -5,5 +5,6 @@
         float GetBenefitForMinute();
         float GetBenefitForSecond();
         float GetBenefitForMinuteAtNextLevel();
+        void IncrementEarningAfterLevelUp();
     }
 }

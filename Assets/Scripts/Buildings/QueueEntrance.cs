@@ -1,34 +1,24 @@
 ﻿namespace Buildings
 {
-    public class QueueEntrance : UpgradableObject, IProfitable
+    public class QueueEntrance : UpgradableObject
     {
         //Add something to read initial value and increment
         private int _initialValue;
-        private float _increment = 0;
-
-        public QueueEntrance()
+        private float _increment = 0.1f;
+        private IProfitable _profitModel;
+        public IProfitable ProfitModel => _profitModel;
+        
+        public override void Initialize(int id, LevelData levelData)
         {
             BuildingType = BuildingType.QueueEntrance;
-        }
-
-        public float GetBenefitForMinute()
-        {
-            return _initialValue * LevelData.Level + _increment; //TODO Get value
-        }
-
-        public float GetBenefitForSecond()
-        {
-            return GetBenefitForMinute() / 60;
-        }
-
-        public float GetBenefitForMinuteAtNextLevel()
-        {
-            return (GetBenefitForMinute() + GetBenefitForMinute() * _increment);
+            objectId = id;
+            this.levelData = levelData;
+            _profitModel = new ProfitModel(_initialValue, _increment, levelData);
         }
 
         protected override void IncrementEarningAfterLevelUp()
         {
-            _increment += 0.1f;
+            _profitModel.IncrementEarningAfterLevelUp();
         }
     }
 }

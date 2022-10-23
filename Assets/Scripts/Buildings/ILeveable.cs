@@ -7,7 +7,6 @@
         public int Id  { get; }
         public void OverrideLevel(int newLevel);
         void OverrideMaximumLevel(int newLevel);
-        public void Init(int id, int maximumLevel);
         public void Upgrade();
         public void Downgrade();
     }

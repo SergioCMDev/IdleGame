@@ -6,15 +6,14 @@ namespace Buildings
     public class LevelData
     {
         private int _maximumLevel;
+        private int _currentLevel;
 
         public int Level => _currentLevel;
         public int MaximumLevel => _maximumLevel;
 
-        private int _currentLevel;
-
-        public LevelData(int maximumLevel)
+        public LevelData(int currentLevel = 1, int maximumLevel = 10)
         {
-            _currentLevel = 1;
+            _currentLevel = currentLevel;
             _maximumLevel = maximumLevel;
         }
 

@@ -1,3 +1,4 @@
+using System;
 using Buildings;
 using Services.BuildingEarningCalculatorService;
 using Services.SavegameInteractorService;
@@ -30,11 +31,19 @@ namespace ScriptsToTest
             }
             else
             {
-                entrance.CreateQueueEntrances();
+                entrance.CreateQueueEntrances(5);
             }
 
-            _queueEntrance = entrance.GetQueue(0).GetComponent<ILeveable>();
-            _queueEntranceProfitable = entrance.GetQueue(0).GetComponent<IProfitable>();
+            _queueEntrance = entrance.GetQueue(0);
+            _queueEntranceProfitable = entrance.GetQueue(0).ProfitModel;
+        }
+
+        private void Update()
+        {
+           var profits =_profitCalculatorService.GetCurrentEarningsForSecond(_queueEntranceProfitable);
+           var profitsForAll =_profitCalculatorService.GetCurrentEarningsForSecondAllBuildings();
+           // Debug.Log($"profits {_queueEntranceProfitable} -> {profits}");
+           Debug.Log($"profits For All{profitsForAll}");
         }
 
         private void OnGUI()

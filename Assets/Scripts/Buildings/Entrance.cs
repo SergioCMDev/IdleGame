@@ -10,7 +10,7 @@ namespace Buildings
     public class Entrance : MonoBehaviour
     {
         private List<QueueEntrance> _queueEntrancesEnabled = new();
-        [SerializeField] private QueueEntrance entrancePrefab; //TODO DO PREFAB GETTER
+        [SerializeField] private QueueEntranceInteractable entrancePrefab; //TODO DO PREFAB GETTER
         private SaveGameInteractorService _saveGameInteractorService;
         private GameConfiguration gameConfiguration;
 
@@ -20,16 +20,34 @@ namespace Buildings
             _saveGameInteractorService = ServiceLocator.Instance.GetService<SaveGameInteractorService>();
         }
 
-        public void CreateQueueEntrances()
+        public void CreateQueueEntrances(int numberOfEntrances)
         {
-            for (int i = 0; i < gameConfiguration.MaximumNumberOfEntrance; i++)
+            for (int i = 0; i < numberOfEntrances; i++)
             {
                 var queueEntranceInstance = Instantiate(entrancePrefab);
+                var queueEntrance = new QueueEntrance();
+                queueEntranceInstance.Init(queueEntrance);
+
                 queueEntranceInstance.name = $"Entrance {i}";
-                queueEntranceInstance.Init(i, gameConfiguration.MaximumNumberOfEntrance);
-                _queueEntrancesEnabled.Add(queueEntranceInstance);
-                _saveGameInteractorService.AddBuilding(queueEntranceInstance);
-                queueEntranceInstance.OnObjectUpdated = OnQueueEntranceUpdated;
+                queueEntrance.Initialize(i, new LevelData());
+                _queueEntrancesEnabled.Add(queueEntrance);
+                _saveGameInteractorService.AddBuilding(queueEntrance);
+                queueEntrance.OnObjectUpdated = OnQueueEntranceUpdated;
+            }
+        }
+        
+        public void LoadQueueEntrances(List<BuildingData> buildingData)
+        {
+            foreach (var loadedEntrance in buildingData)
+            {
+                var queueEntrance = new QueueEntrance();
+                var queueEntranceInstance = Instantiate(entrancePrefab);
+                queueEntranceInstance.name = $"Entrance {loadedEntrance.id}";
+
+                queueEntranceInstance.Init(queueEntrance);
+                queueEntrance.Initialize(loadedEntrance.id, new LevelData(loadedEntrance.currentLevel, loadedEntrance.currentMaximumLevel));
+                _queueEntrancesEnabled.Add(queueEntrance);
+                queueEntrance.OnObjectUpdated = OnQueueEntranceUpdated;
             }
         }
 
@@ -41,19 +59,6 @@ namespace Buildings
         public QueueEntrance GetQueue(int id)
         {
             return _queueEntrancesEnabled[id];
-        }
-
-        public void LoadQueueEntrances(List<BuildingData> buildingData)
-        {
-            foreach (var VARIABLE in buildingData)
-            {
-                var queueEntranceInstance = Instantiate(entrancePrefab);
-                queueEntranceInstance.Init(VARIABLE.id, VARIABLE.currentMaximumLevel);
-
-                queueEntranceInstance.OverrideLevel(VARIABLE.currentLevel);
-                _queueEntrancesEnabled.Add(queueEntranceInstance);
-                queueEntranceInstance.OnObjectUpdated = OnQueueEntranceUpdated;
-            }
         }
 
         public void DeleteQueueEntrances()

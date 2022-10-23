@@ -1,6 +1,8 @@
 ﻿using Buildings;
+using Services.SavegameInteractorService;
 using Services.Utils;
 using UnityEngine;
+using Utils;
 
 namespace Services.BuildingEarningCalculatorService
 {
@@ -8,6 +10,8 @@ namespace Services.BuildingEarningCalculatorService
         menuName = "Loadable/Services/BuildingEarningCalculatorZoneOne")]
     public class BuildingEarningCalculatorZoneOne : LoadableComponent, IProfitCalculatorService
     {
+        private SaveGameInteractorService _saveGameInteractorService;
+
         public float GetCurrentEarningsForSecond(IProfitable queueEntrance)
         {
             return queueEntrance.GetBenefitForSecond();
@@ -17,9 +21,27 @@ namespace Services.BuildingEarningCalculatorService
             return queueEntrance.GetBenefitForMinute();
         }
 
+        public float GetCurrentEarningsForSecondAllBuildings()
+        {
+            var quantity = 0.0f;
+            foreach (var building in  _saveGameInteractorService.GetQueueEntrances())
+            {
+                ProfitModel queueEntrance = new ProfitModel(building.currentLevel, 1 ,new LevelData(building.currentMaximumLevel));
+                quantity += queueEntrance.GetBenefitForSecond();
+            }
+           
+            return quantity;
+        }
+        
+        public float GetCurrentEarningsForMinuteAllBuildings()
+        {
+            return GetCurrentEarningsForSecondAllBuildings() * 60;
+        }
+        
         public override void Execute()
         {
             Debug.Log("[BuildingEarningCalculatorZoneOne] Init");
+            _saveGameInteractorService = ServiceLocator.Instance.GetService<SaveGameInteractorService>();
 
         }
     }

@@ -7,5 +7,7 @@ namespace Services.BuildingEarningCalculatorService
         float GetCurrentEarningsForSecond(IProfitable queueEntrance);
 
         float GetCurrentEarningsForMinute(IProfitable queueEntrance);
+        float GetCurrentEarningsForSecondAllBuildings();
+        float GetCurrentEarningsForMinuteAllBuildings();
     }
 }

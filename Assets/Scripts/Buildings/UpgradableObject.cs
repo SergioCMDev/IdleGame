@@ -3,44 +3,39 @@ using UnityEngine;
 
 namespace Buildings
 {
-    public abstract class UpgradableObject : MonoBehaviour, ILeveable
+    public abstract class UpgradableObject :  ILeveable
     {
-        public LevelData LevelData => _levelData;
+        public LevelData LevelData => levelData;
         public Action<UpgradableObject> OnObjectUpdated;
         public BuildingType BuildingType { get; internal set; }
         public int Id => objectId;
         protected int objectId;
-        private LevelData _levelData;
+        protected LevelData levelData;
 
-        public void Init(int id, int maximumLevel)
-        {
-            objectId = id;
-            _levelData = new LevelData(maximumLevel);
-        }
+        public abstract void Initialize(int id, LevelData levelData);
+        protected abstract void  IncrementEarningAfterLevelUp();
 
         public void OverrideLevel(int newLevel)
         {
-            _levelData.OverrideLevel(newLevel);
+            levelData.OverrideLevel(newLevel);
         }
         
         public void OverrideMaximumLevel(int newLevel)
         {
-            _levelData.OverrideMaximumLevel(newLevel);
+            levelData.OverrideMaximumLevel(newLevel);
         }
 
         public void Upgrade()
         {
-            _levelData.Upgrade();
+            levelData.Upgrade();
             IncrementEarningAfterLevelUp();
             OnObjectUpdated?.Invoke(this);
-            Debug.Log($"Upgraded {this.gameObject.name}");
         }
 
-        protected abstract void  IncrementEarningAfterLevelUp();
 
         public void Downgrade()
         {
-            _levelData.Downgrade();
+            levelData.Downgrade();
             Debug.Log($"Downgraded {this} {objectId}");
         }
     }

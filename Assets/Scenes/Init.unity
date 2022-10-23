@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a88140560e44f2c97166213870ecc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entrancePrefab: {fileID: 8647464133318477414, guid: c148f25a1c726ff4eac66b9da041a1cf, type: 3}
+  entrancePrefab: {fileID: 7056730705895689095, guid: c148f25a1c726ff4eac66b9da041a1cf, type: 3}
 --- !u!4 &524587649
 Transform:
   m_ObjectHideFlags: 0
