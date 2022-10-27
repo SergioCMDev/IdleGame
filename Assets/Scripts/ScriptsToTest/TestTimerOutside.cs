@@ -1,3 +1,4 @@
+using Services.BuildingEarningCalculatorService;
 using Services.TimerOutsideCounterService;
 using UnityEngine;
 using Utils;
@@ -7,13 +8,14 @@ namespace ScriptsToTest
     public class TestTimerOutside : MonoBehaviour
     {
         private TimeNotPlayingCounterService _timerNotPlaying;
+        private IProfitCalculatorService _profitCalculatorService;
 
         [SerializeField] private bool _exitApp;
 
-        // Start is called before the first frame update
         void Start()
         {
             _timerNotPlaying = ServiceLocator.Instance.GetService<TimeNotPlayingCounterService>();
+            _profitCalculatorService = ServiceLocator.Instance.GetService<IProfitCalculatorService>();
             if (_exitApp)
             {
                 _timerNotPlaying.ExitingApp();
@@ -21,6 +23,10 @@ namespace ScriptsToTest
             }
 
             var minutes = _timerNotPlaying.GetMinutesOutside();
+
+            var profitGenerated = _profitCalculatorService.GetCurrentEarningsForMinuteAllBuildings() * minutes;
+            
+            
         }
 
         private void OnApplicationQuit()
