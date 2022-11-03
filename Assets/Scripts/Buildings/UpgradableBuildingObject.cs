@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Buildings
 {
-    public abstract class UpgradableObject :  ILeveable
+    public abstract class UpgradableBuildingObject :  ILeveable
     {
         public LevelData LevelData => levelData;
-        public Action<UpgradableObject> OnObjectUpdated;
+        public Action<UpgradableBuildingObject> OnObjectUpdated;
         public BuildingType BuildingType { get; internal set; }
         public int Id => objectId;
         protected int objectId;
@@ -31,7 +31,6 @@ namespace Buildings
             IncrementEarningAfterLevelUp();
             OnObjectUpdated?.Invoke(this);
         }
-
 
         public void Downgrade()
         {

@@ -10,7 +10,7 @@ namespace Services.BuildingEarningCalculatorService
         menuName = "Loadable/Services/BuildingEarningCalculatorZoneOne")]
     public class BuildingEarningCalculatorZoneOne : LoadableComponent, IProfitCalculatorService
     {
-        private SaveGameInteractorService _saveGameInteractorService;
+        private SaveGameBuildingInteractorService _saveGameBuildingInteractorService;
 
         public float GetCurrentEarningsForSecond(IProfitable queueEntrance)
         {
@@ -24,7 +24,7 @@ namespace Services.BuildingEarningCalculatorService
         public float GetCurrentEarningsForSecondAllBuildings()
         {
             var quantity = 0.0f;
-            foreach (var building in  _saveGameInteractorService.GetQueueEntrances())
+            foreach (var building in  _saveGameBuildingInteractorService.GetQueueEntrances())
             {
                 ProfitModel queueEntrance = new ProfitModel(building.currentLevel, 1 ,new LevelData(building.currentMaximumLevel));
                 quantity += queueEntrance.GetBenefitForSecond();
@@ -41,7 +41,7 @@ namespace Services.BuildingEarningCalculatorService
         public override void Execute()
         {
             Debug.Log("[BuildingEarningCalculatorZoneOne] Init");
-            _saveGameInteractorService = ServiceLocator.Instance.GetService<SaveGameInteractorService>();
+            _saveGameBuildingInteractorService = ServiceLocator.Instance.GetService<SaveGameBuildingInteractorService>();
 
         }
     }

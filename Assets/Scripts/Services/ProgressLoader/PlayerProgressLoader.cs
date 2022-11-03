@@ -8,12 +8,12 @@ namespace Services.ProgressLoader
     [CreateAssetMenu(fileName ="PlayerProgressLoader", menuName = "Loadable/PlayerProgressLoader")]
     public class PlayerProgressLoader : LoadableComponent
     {
-        private SaveGameInteractorService _savegameInteractorService;
+        private SaveGameBuildingInteractorService _savegameBuildingInteractorService;
 
         public override void Execute()
         {
             Debug.Log("[PlayerProgressLoader] Iniciamos inicializacion");
-            _savegameInteractorService = ServiceLocator.Instance.GetService<SaveGameInteractorService>();
+            _savegameBuildingInteractorService = ServiceLocator.Instance.GetService<SaveGameBuildingInteractorService>();
 
         }
     }

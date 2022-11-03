@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 namespace Buildings
 {
     internal class QueueEntranceInteractable : MonoBehaviour
@@ -8,6 +9,11 @@ namespace Buildings
         public void Init(QueueEntrance queueEntrance)
         {
             _queueEntrance = queueEntrance;
+        }
+
+        private void OnMouseDown()
+        {
+            Upgrade();
         }
 
         public void Upgrade()
