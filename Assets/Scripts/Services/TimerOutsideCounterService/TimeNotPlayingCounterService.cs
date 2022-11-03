@@ -11,26 +11,26 @@ namespace Services.TimerOutsideCounterService
         menuName = "Loadable/Services/TimeNotPlayingCounterService")]
     public class TimeNotPlayingCounterService : LoadableComponent
     {
-        private SaveGameBuildingInteractorService _savegameBuildingInteractorService;
+        private SaveGameInteractorService _savegameInteractorService;
 
         public void ExitingApp()
         {
-            _savegameBuildingInteractorService.SavegameFile.LastTimeOpened = DateTime.Now;
+            _savegameInteractorService.SavegameFile.LastTimeOpened = DateTime.Now;
             Debug.Log(
-                $"[TimeNotPlayingCounterService] Exiting at {_savegameBuildingInteractorService.SavegameFile.LastTimeOpened}");
-            _savegameBuildingInteractorService.SaveGame();
+                $"[TimeNotPlayingCounterService] Exiting at {_savegameInteractorService.SavegameFile.LastTimeOpened}");
+            _savegameInteractorService.SaveGame();
         }
 
         public int GetMinutesOutside()
         {
-            var lastTime = _savegameBuildingInteractorService.SavegameFile.LastTimeOpened;
+            var lastTime = _savegameInteractorService.SavegameFile.LastTimeOpened;
             if (lastTime == DateTime.MinValue) return 0;
             var difference = DateTime.Now - lastTime;
             var minutesSinceLastExiting = difference.Days * 24 * 60 +
                                           difference.Hours * 60 +
                                           difference.Minutes;
-            _savegameBuildingInteractorService.SavegameFile.LastTimeOpened = DateTime.MinValue;
-            _savegameBuildingInteractorService.SaveGame();
+            _savegameInteractorService.SavegameFile.LastTimeOpened = DateTime.MinValue;
+            _savegameInteractorService.SaveGame();
             Debug.Log(
                 $"[TimeNotPlayingCounterService] Get Minutes {minutesSinceLastExiting}");
 
@@ -40,7 +40,7 @@ namespace Services.TimerOutsideCounterService
         public override void Execute()
         {
             Debug.Log("[TimeNotPlayingCounterService] Iniciamos inicializacion");
-            _savegameBuildingInteractorService = ServiceLocator.Instance.GetService<SaveGameBuildingInteractorService>();
+            _savegameInteractorService = ServiceLocator.Instance.GetService<SaveGameInteractorService>();
         }
     }
 }

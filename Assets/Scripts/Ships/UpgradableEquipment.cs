@@ -1,19 +1,20 @@
 ﻿using System;
+using Buildings;
 using UnityEngine;
 
-namespace Buildings
+namespace Ships
 {
-    public abstract class UpgradableBuildingObject :  ILeveable
+    public abstract class UpgradableEquipment :  ILeveable
     {
         public LevelData LevelData => levelData;
-        public Action<UpgradableBuildingObject> OnObjectUpdated;
-        public BuildingType BuildingType { get; internal set; }
+        public Action<UpgradableEquipment> OnObjectUpdated;
+        public EquipmentType EquipmentType { get; internal set; }
         public int Id => objectId;
         protected int objectId;
         protected LevelData levelData;
 
         public abstract void Initialize(int id, LevelData levelData);
-        protected abstract void  IncrementEarningAfterLevelUp();
+        protected abstract void  ImprovementAfterLevelUp();
 
         public void OverrideLevel(int newLevel)
         {
@@ -28,7 +29,7 @@ namespace Buildings
         public void Upgrade()
         {
             levelData.Upgrade();
-            IncrementEarningAfterLevelUp();
+            ImprovementAfterLevelUp();
             OnObjectUpdated?.Invoke(this);
         }
 
