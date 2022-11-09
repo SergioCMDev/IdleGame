@@ -506,7 +506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1262600003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,7 +551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1385759631
 Transform:
   m_ObjectHideFlags: 0
@@ -939,14 +939,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadablesSO:
   - {fileID: 11400000, guid: d2a495b29dd91f64fa8801ba360163df, type: 2}
-  - {fileID: 11400000, guid: bbd89787f684dd54daf7b4b45ff778ac, type: 2}
-  - {fileID: 11400000, guid: 9979113ee83b31a4f86ea5f77368e1b6, type: 2}
   - {fileID: 11400000, guid: 31d842d9ab7ff674a91773a3b679aa3d, type: 2}
   - {fileID: 11400000, guid: a1bf477f79c2ee942a38ebe87daafcc5, type: 2}
   - {fileID: 11400000, guid: 08c4558b667689744b571947fd7bff4d, type: 2}
-  - {fileID: 11400000, guid: 9ffd597f73273764ca579e1d723893fa, type: 2}
   - {fileID: 11400000, guid: 805c394af5a934748bf78c8493683749, type: 2}
-  - {fileID: 11400000, guid: d9de6bbfa982d56408824033da5808f7, type: 2}
+  - {fileID: 11400000, guid: 4c819afe05a8524489e10875169c07a6, type: 2}
 --- !u!4 &2011008626
 Transform:
   m_ObjectHideFlags: 0

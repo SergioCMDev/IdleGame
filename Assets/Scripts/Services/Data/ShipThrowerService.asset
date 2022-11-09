@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 516b1976c0a84554a89b48adac6ad794, type: 3}
-  m_Name: SaveGameInteractorService
+  m_Script: {fileID: 11500000, guid: f49cd890e3474929b8d9bc528fbe6c36, type: 3}
+  m_Name: ShipThrowerService
   m_EditorClassIdentifier: 
-  _isService: 0
+  _isService: 1
   _orderToExecute: 0
-  _dependencies: []
+  _dependencies:
+  - {fileID: 11400000, guid: 9ffd597f73273764ca579e1d723893fa, type: 2}

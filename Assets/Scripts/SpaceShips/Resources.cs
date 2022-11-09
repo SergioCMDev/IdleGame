@@ -1,4 +1,5 @@
 ﻿public enum Resources
 {
-  Oxygen, Pet   
+    Oxygen,
+    Pet
 }

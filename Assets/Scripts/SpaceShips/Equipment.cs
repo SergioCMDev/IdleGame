@@ -1,6 +1,6 @@
 ﻿using Buildings;
 
-namespace Ships
+namespace SpaceShips
 {
     public class Equipment : UpgradableEquipment
     {

@@ -6,6 +6,7 @@ using Unity.Notifications.Android;
 using UnityEngine;
 using UnityEngine.Android;
 using Utils;
+
 namespace Services.AndroidNotification
 {
     [CreateAssetMenu(fileName = "AndroidNotificationInitializer",

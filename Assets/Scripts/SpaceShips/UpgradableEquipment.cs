@@ -2,7 +2,7 @@
 using Buildings;
 using UnityEngine;
 
-namespace Ships
+namespace SpaceShips
 {
     public abstract class UpgradableEquipment :  ILeveable
     {
